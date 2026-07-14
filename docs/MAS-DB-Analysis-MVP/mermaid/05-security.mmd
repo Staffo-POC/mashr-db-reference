@@ -1,0 +1,19 @@
+erDiagram
+    dbo_tUserGroup ||--o{ dbo_tUser : "USG_ID"
+    dbo_tUserGroup ||--o{ dbo_tAssignUserRole : "USG_ID"
+    dbo_tUserGroup ||--o{ dbo_tAssignMenuPermission : "USG_ID"
+    dbo_tUser ||--o{ dbo_tUser_LoginStat : "UID"
+
+    dbo_tUserGroup {
+      uniqueidentifier USG_ID PK
+    }
+    dbo_tUser {
+      uniqueidentifier UID PK
+      uniqueidentifier USG_ID FK
+    }
+    dbo_tAssignUserRole {
+      uniqueidentifier USG_ID FK
+    }
+    dbo_tAssignMenuPermission {
+      uniqueidentifier USG_ID FK
+    }

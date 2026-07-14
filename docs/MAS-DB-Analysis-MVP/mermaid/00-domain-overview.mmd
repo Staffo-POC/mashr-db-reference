@@ -1,0 +1,28 @@
+flowchart LR
+    subgraph Core_Master["Core Master"]
+        Company["Company / SSO"]
+        Project["Project / Period"]
+        Employee["Employee / Site / Title"]
+    end
+
+    subgraph Operations["Operations"]
+        Attendance["Attendance / Shift"]
+        Workflow["Request / Approval"]
+    end
+
+    subgraph BackOffice["Back Office"]
+        Payroll["Payroll / Tax"]
+        Security["User / Permission"]
+    end
+
+    subgraph Extensions["Extensions"]
+        Service["Service / Mobile Sync"]
+        Billing["Billing"]
+        Customize["Customize SCC"]
+    end
+
+    Company --> Project
+    Project --> Payroll
+    Employee --> Attendance
+    Employee --> Payroll
+    Employee --> Workflow

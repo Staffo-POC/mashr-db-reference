@@ -1,0 +1,22 @@
+erDiagram
+    dbo_tProject ||--o{ dbo_tPMPeriod : "PRJ_ID"
+    dbo_tEmployee ||--o{ dbo_tPayroll : "EmployeeCode"
+    dbo_tPMPeriod ||--o{ dbo_tPayroll : "PMPERIOD_ID -> PMPeriod_ID"
+    dbo_tEmployee ||--o{ dbo_tLOG_Payroll : "EmployeeCode"
+    dbo_tEmployee ||--o{ dbo_tTax91 : "EmployeeCode"
+
+    dbo_tProject {
+      uniqueidentifier PRJ_ID PK
+    }
+    dbo_tPMPeriod {
+      uniqueidentifier PMPeriod_ID PK
+      uniqueidentifier PRJ_ID FK
+    }
+    dbo_tPayroll {
+      uniqueidentifier PMPERIOD_ID PK
+      varchar EmployeeCode PK
+    }
+    dbo_tTax91 {
+      varchar EmployeeCode PK
+      varchar Period PK
+    }

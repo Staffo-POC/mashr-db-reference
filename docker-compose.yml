@@ -1,0 +1,31 @@
+services:
+  mashr-db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: mashr-db
+    restart: unless-stopped
+    platform: linux/amd64
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: ${MSSQL_SA_PASSWORD:?MSSQL_SA_PASSWORD is required}
+      MSSQL_PID: "Developer"
+      MSSQL_COLLATION: Thai_CI_AS
+    ports:
+      - "${MSSQL_PORT:-14333}:1433"
+    volumes:
+      - mashr-db-data:/var/opt/mssql
+      - ./database:/workspace/database:ro
+      - ./database/scripts/mssql/generated:/workspace/db/generated
+      - ./database/scripts/mssql/logs:/workspace/db/logs
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P \"$${MSSQL_SA_PASSWORD}\" -C -Q \"SELECT 1\" || /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P \"$${MSSQL_SA_PASSWORD}\" -Q \"SELECT 1\""
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 30s
+
+volumes:
+  mashr-db-data:

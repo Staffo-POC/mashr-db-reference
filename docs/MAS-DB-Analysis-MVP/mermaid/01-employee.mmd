@@ -1,0 +1,29 @@
+erDiagram
+    dbo_tCompany ||--o{ dbo_tSSO_Account : "CPN_ID"
+    dbo_tSSO_Account ||--o{ dbo_tProject : "SSOACC_ID"
+    dbo_tProject ||--o{ dbo_tPMPeriod : "PRJ_ID"
+    dbo_tSiteTR ||--o{ dbo_tEmployee : "Site_ID"
+    dbo_tEmployeeTitle ||--o{ dbo_tEmployee : "EMPTT_ID"
+    dbo_tEmployeeStatusGroup ||--o{ dbo_tEmployeeStatus : "EMPSTG_ID"
+    dbo_tEmployee ||--o{ dbo_tEmployeePhoto : "EmployeeCode"
+    dbo_tEmployee ||--o{ dbo_tAssignChargeRate : "EmployeeCode"
+    dbo_tEmployee ||--o{ dbo_tPunishment : "EmployeeCode"
+    dbo_tGUILTY_Type ||--o{ dbo_tPunishment : "GUILTY_TYPE_ID"
+    dbo_tEmployee ||--o{ dbo_tReward : "EmployeeCode"
+    dbo_tPERFORMANCE_Type ||--o{ dbo_tReward : "PERFORMANCE_TYPE_ID"
+
+    dbo_tEmployee {
+      varchar EmployeeCode PK
+      uniqueidentifier Site_ID FK
+      uniqueidentifier EMPTT_ID FK
+    }
+    dbo_tSiteTR {
+      uniqueidentifier Site_ID PK
+    }
+    dbo_tEmployeeTitle {
+      uniqueidentifier EMPTT_ID PK
+    }
+    dbo_tProject {
+      uniqueidentifier PRJ_ID PK
+      uniqueidentifier SSOACC_ID FK
+    }

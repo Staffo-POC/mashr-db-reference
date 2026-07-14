@@ -1,0 +1,87 @@
+tier,seed_mode,sample_limit,schema_name,table_name,row_count,reason
+0,FULL,,dbo,tCompany,3,core employer master
+0,FULL,,dbo,tSSO_Account,3,links company to project
+0,FULL,,dbo,tProject,5,project and payroll setup
+0,FULL,,dbo,tSiteTR,187,site master
+0,FULL,,dbo,tCostCenter,3,cost center master
+0,SAMPLE,100,dbo,tBU1,532,org structure useful but larger than tiny masters
+0,FULL,,dbo,tBU2,4,org structure
+0,FULL,,dbo,tBU3,1,org structure
+0,FULL,,dbo,tBU4,1,org structure
+0,FULL,,dbo,tEmployeeStatusGroup,3,employee status hierarchy
+0,FULL,,dbo,tEmployeeStatus,3,employee status
+0,FULL,,dbo,tEmployeeTitle,209,title master
+0,FULL,,dbo,tEmployeeLevel,14,level master
+0,FULL,,dbo,tEmployeeType1,5,employee type master
+0,FULL,,dbo,tEmployeeType2,1,employee type master
+0,FULL,,dbo,tEmployeeType3,2,employee type master
+0,FULL,,dbo,tGender,3,small reference
+0,FULL,,dbo,tNationality,3,small reference
+0,FULL,,dbo,tPrefix,3,small reference
+0,FULL,,dbo,tMartialStatus,5,small reference
+0,FULL,,dbo,tShift,7,attendance rule master
+0,FULL,,dbo,tWorkCalendar,3,calendar master
+0,SAMPLE,100,dbo,tWorkCalendarDetail,945,calendar detail
+0,SAMPLE,100,dbo,tPMPeriod,150,payroll period master
+0,FULL,,dbo,tTaxRate,32,tax rate reference
+0,FULL,,dbo,tBankMaster,56,bank reference
+0,FULL,,dbo,tBankName,36,bank reference
+0,FULL,,dbo,tSSO_Hospital,27,social security reference
+0,FULL,,dbo,tSSO_ResignReason,7,social security reference
+1,FULL,,dbo,tUserGroup,7,permission master
+1,SAMPLE,87,dbo,tUser,87,user accounts
+1,FULL,,dbo,tSYSUserRole,8,role reference
+1,FULL,,dbo,tAssignUserRole,10,user role bridge
+1,FULL,,dbo,tAssignMenuPermission,3,menu permission bridge
+1,FULL,,dbo,tApproverList,24,approval setup
+1,FULL,,dbo,tRequestSystem,8,workflow system reference
+1,FULL,,dbo,tRequestType,43,request type reference
+1,FULL,,dbo,tRule,29,workflow rule
+1,FULL,,dbo,tFlow,29,workflow flow
+1,FULL,,dbo,tFlowPath,29,workflow path
+1,FULL,,dbo,tSelectApprover,60,approval route details
+2,SAMPLE,100,dbo,tEmployee,21939,core employee sample
+2,FULL,,dbo,tEmployee_Children,10,small child table
+2,FULL,,dbo,tEmployeeAbility,8,small child table
+2,FULL,,dbo,tEmployeeWork_Quota,22,small child table
+2,SAMPLE,100,dbo,tEmployee_LeaveQuota,12087,leave quota sample
+2,SAMPLE,100,dbo,tEmployee_OtherCard,2282,employee card mapping
+2,SAMPLE,100,dbo,tEmployee_RateP0x,8773,employee pay rate sample
+2,SAMPLE,50,dbo,tEmployeePhoto,16440,optional payload-heavy sample
+3,FULL,,dbo,tAssignWorkCalendar,1,attendance setup bridge
+3,SAMPLE,100,dbo,tTimeStamp,7377898,largest attendance fact
+3,SAMPLE,100,dbo,tTimeInOut,3551128,attendance result fact
+3,SAMPLE,100,dbo,tTimeInOut_Data,1420276,attendance detail fact
+3,SAMPLE,100,dbo,tTimeInOut_AddLeave,726553,attendance leave overlay
+3,SAMPLE,100,dbo,tTimeSheet_MultiPeriod,0,attendance period slice if source rows exist
+4,SAMPLE,100,dbo,tPayroll,147616,payroll header sample
+4,SAMPLE,100,dbo,tPayroll_Detail,147670,payroll detail sample
+4,SAMPLE,100,dbo,tPayroll_Tax,147619,payroll tax sample
+4,SAMPLE,100,dbo,tPayroll_Allowance,147616,payroll allowance sample
+4,SAMPLE,100,dbo,tPayroll_Welfare,88692,payroll welfare sample
+4,SAMPLE,100,dbo,tTax91,22105,tax reporting sample
+4,SAMPLE,100,dbo,tPayroll_ColDef,1790,payroll column definition sample
+4,SAMPLE,100,dbo,tColDef_PayrollExport,1584,export field sample
+4,FULL,,dbo,tColDef_PayrollFormat,6,small payroll config
+5,SAMPLE,100,dbo,tRequest,7107,request transaction sample
+5,SAMPLE,100,dbo,tStage,9568,request stage sample
+5,SAMPLE,100,dbo,tRequest_byAdmin,4074,admin request sample
+5,SAMPLE,100,customize,tSCC_TranferSite,10657,custom site transfer flow
+5,SAMPLE,100,customize,tSCC_TranferEmp,10657,custom employee transfer flow
+5,SAMPLE,100,customize,tSCC_TranferApprove,10657,custom approval flow
+6,FULL,,dbo,tSysConfig,6,system config
+6,FULL,,dbo,tSysParm,58,system parameters
+6,FULL,,dbo,tSysSettings,2,system settings
+6,SAMPLE,100,dbo,tSYS_WebMenu,126,web menu config
+6,SAMPLE,100,dbo,tSYSOutPayMenu,113,outpay menu config
+6,FULL,,dbo,tReportNormal_Config,46,report config
+6,FULL,,dbo,tReportNormal_Language,46,report language config
+6,FULL,,customize,tInfoExportGroup,6,custom export metadata
+6,FULL,,customize,tInfoExportGroupDetail,87,custom export metadata
+6,FULL,,customize,tMOD_LogSetting,179,custom config
+6,FULL,,customize,tSCC_AprvSite,141,custom approval site setup
+6,FULL,,customize,tSCC_SettingPayAllowance,2,custom allowance config
+9,SKIP,,billing,tClient,0,billing gap no usable current metadata
+9,SKIP,,billing,tContractor,0,billing gap no usable current metadata
+9,SKIP,,billing,tAllowance,0,billing gap no usable current metadata
+9,SKIP,,billing,tProjectCost,0,billing gap no usable current metadata

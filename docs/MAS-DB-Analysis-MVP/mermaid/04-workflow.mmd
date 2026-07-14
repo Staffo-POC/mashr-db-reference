@@ -1,0 +1,28 @@
+erDiagram
+    dbo_tRequestSystem ||--o{ dbo_tRequestType : "RequestSystemID"
+    dbo_tRequestSystem ||--o{ dbo_tFlow : "RequestSystemID"
+    dbo_tRequestType ||--o{ dbo_tEmployeeLevel_LeaveType : "RequestTypeID"
+    dbo_tRule ||--o{ dbo_tRequest : "RuleID"
+    dbo_tRule ||--o{ dbo_tFlowPath : "RuleID"
+    dbo_tRule ||--o{ dbo_tCCList : "RuleID"
+    dbo_tRule ||--o{ dbo_tCondition : "RuleID"
+    dbo_tRequest ||--o{ dbo_tStage : "ReqID -> RequestID"
+    dbo_tEmployee ||--o{ dbo_tApproverList : "EmployeeID -> EmployeeCode"
+    dbo_tApproverList ||--o{ dbo_tSelectApprover : "APPLID"
+    dbo_tFlowPath ||--o{ dbo_tSelectApprover : "FlowPathID"
+    dbo_tApproverGroup ||--o{ dbo_tUseList : "APPGID"
+    dbo_tGroup ||--o{ dbo_tUse_Flow : "GroupID"
+    dbo_tGroup ||--o{ dbo_tManager : "GroupID"
+    dbo_tEmployee ||--o{ dbo_tManager_Delegated : "EmployeeCode"
+
+    dbo_tRequest {
+      uniqueidentifier RequestID PK
+      uniqueidentifier RuleID FK
+    }
+    dbo_tStage {
+      uniqueidentifier StageID PK
+      uniqueidentifier ReqID FK
+    }
+    dbo_tRule {
+      uniqueidentifier RuleID PK
+    }
