@@ -9,6 +9,7 @@ Use this page as the documentation entry point.
 ## Reference Only
 
 - [MAS reverse engineering notes](./mas-reverse-engineering/README.md) - older detailed working notes, seed runbooks, table catalogs, and exploratory analysis.
+- [summary/seed-data-sample-th.md](./summary/seed-data-sample-th.md) - สรุปภาษาไทย: สถานะ seed ล่าสุด, ปัญหาที่เจอตอน setup ซ้ำ, ตารางแนะนำแบ่งกลุ่ม, ตัวอย่างข้อมูลจริง
 
 ## Source Of Truth
 

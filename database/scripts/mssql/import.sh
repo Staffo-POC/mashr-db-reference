@@ -35,6 +35,11 @@ run_sql() {
   local mode="${3:-strict}"
   local log_file="${MSSQL_DIR}/logs/${label}.log"
 
+  local db_flag=""
+  if [[ "${label}" != "00_bootstrap" ]]; then
+    db_flag="-d ${DATABASE_NAME}"
+  fi
+
   echo "Importing ${label}..."
   set +e
   if [[ "${mode}" == "strict" ]]; then
@@ -42,6 +47,7 @@ run_sql() {
       -S localhost \
       -U "${DB_USER}" \
       -P "${MSSQL_SA_PASSWORD}" \
+      ${db_flag} \
       -b \
       -r 1 \
       -i "/workspace/db/generated/${sql_file}" \
@@ -51,6 +57,7 @@ run_sql() {
       -S localhost \
       -U "${DB_USER}" \
       -P "${MSSQL_SA_PASSWORD}" \
+      ${db_flag} \
       -r 1 \
       -i "/workspace/db/generated/${sql_file}" \
       > "${log_file}" 2>&1
@@ -85,6 +92,10 @@ run_sql "01_tables" "01_tables.sql"
 run_sql "03_functions" "03_functions.sql" "best-effort"
 run_sql "02_known_stubs" "02_known_stubs.sql"
 run_sql "04_programmability" "04_programmability.sql" "best-effort"
+
+if [[ -f "${MSSQL_DIR}/generated/09_base_relaxed_seed.sql" ]]; then
+  run_sql "09_base_relaxed_seed" "09_base_relaxed_seed.sql" "best-effort"
+fi
 
 if [[ -n "${MASHR_SEED_SNAPSHOT:-}" ]]; then
   SEED_DIR="${ROOT_DIR}/database/seed/${MASHR_SEED_SNAPSHOT}"

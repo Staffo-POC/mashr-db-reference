@@ -109,6 +109,9 @@ SQL
 convert_sql "${MASTER_DIR}/MAS_01_tables.sql" "${GENERATED_DIR}/01_tables.sql"
 convert_sql "${MASTER_DIR}/MAS_03_functions.sql" "${GENERATED_DIR}/03_functions.sql"
 convert_sql "${MASTER_DIR}/MAS_02_programmability.sql" "${GENERATED_DIR}/04_programmability.sql"
+if [[ -f "${MASTER_DIR}/MAS_09_seed_all_top100_relaxed.sql" ]]; then
+  convert_sql "${MASTER_DIR}/MAS_09_seed_all_top100_relaxed.sql" "${GENERATED_DIR}/09_base_relaxed_seed.sql"
+fi
 
 perl -0pi -e 's{/\*\*\*\*\*\* Object:\s+UserDefinedFunction \[dbo\]\.\[fDefaultRowGuid\].*?GO\r?\n(?=/\*\*\*\*\*\* Object:\s+UserDefinedFunction \[dbo\]\.\[fDefineDefaultShift\])}{}s' "${GENERATED_DIR}/03_functions.sql"
 

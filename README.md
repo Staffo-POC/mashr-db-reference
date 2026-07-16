@@ -24,6 +24,10 @@ Container: mashr-db
 
 The password in `.env.example` is for local development only. Do not reuse it outside local/dev machines.
 
+`./scripts/setup.sh` alone only builds schema — `database/seed/` ships empty (no snapshot committed), so every table has 0 rows until you load a seed. See [Seed Snapshots](#seed-snapshots) and [Sample Seed Data](#sample-seed-data) below.
+
+If you connect with an MCP/MSSQL client (e.g. `.mcp.json`), make sure its `MSSQL_PASSWORD` matches `MSSQL_SA_PASSWORD` in `.env` — a stale password there is a common cause of `Login failed for user 'sa'`.
+
 ## Common Commands
 
 ```bash
@@ -94,6 +98,25 @@ database/seed/${MASHR_SEED_SNAPSHOT}/
 ```
 
 Leave `MASHR_SEED_SNAPSHOT` blank when no approved seed data should be imported.
+
+## Sample Seed Data
+
+No dated snapshot is committed under `database/seed/` yet, but a pre-built sample seed from the 2026-07-13 export is bundled at:
+
+```text
+database/schema/master/MAS_09_seed_all_top100_relaxed.sql
+```
+
+It carries `TOP 100`-per-table sample rows for master/reference tables (288 tables / ~14,600 rows), with FK constraints re-enabled as untrusted after load. It is for local analysis/UI exploration only, not a production-complete seed.
+
+Load it after `./scripts/setup.sh` has built the schema:
+
+```bash
+docker exec mashr-db /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P "$(grep MSSQL_SA_PASSWORD .env | cut -d= -f2)" -C -d MAS -r 1 \
+  -i /workspace/database/schema/master/MAS_09_seed_all_top100_relaxed.sql
+```
+
+Run it without `-b` (unlike `database/scripts/mssql/scripts/import-seed-file.sh`, which passes `-b` and aborts the whole file on the first error). A handful of rows in this sample are known to violate NOT NULL constraints (`__MigrationHistory`, `sysdiagrams`, `tLogRequest_OT_Process`, `tRequest`, `service.tTemp_OTRequest` — see [docs/mas-reverse-engineering/07-seed-runbook.md](docs/mas-reverse-engineering/07-seed-runbook.md)); without `-b` those rows are skipped and the rest of the file still loads.
 
 ## Workflow After Getting New Site Data
 
