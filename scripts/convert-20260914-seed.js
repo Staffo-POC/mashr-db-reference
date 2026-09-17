@@ -244,6 +244,7 @@ EXEC sp_MSforeachtable 'ALTER TABLE ? NOCHECK CONSTRAINT ALL';
 GO
 
 PRINT 'Clearing existing seed data from target transaction tables...';
+IF OBJECT_ID(N'dbo.tLOG_OTApprove', N'U') IS NOT NULL DELETE FROM [dbo].[tLOG_OTApprove];
 IF OBJECT_ID(N'dbo.tTimeStamp', N'U') IS NOT NULL DELETE FROM [dbo].[tTimeStamp];
 IF OBJECT_ID(N'dbo.tTimeInOut_AddLeave', N'U') IS NOT NULL DELETE FROM [dbo].[tTimeInOut_AddLeave];
 IF OBJECT_ID(N'dbo.tTimeInOut', N'U') IS NOT NULL DELETE FROM [dbo].[tTimeInOut];
@@ -270,11 +271,12 @@ async function main() {
 
   console.log('Starting CSV to SQL conversion for 20260914...');
   await convertEmployeeMaster('01_employee_master.csv', '10_dbo.tEmployee.sql');
-  await convertFullTableCsv('02_tTimeInOut.csv', 'tTimeInOut', '11_dbo.tTimeInOut.sql');
-  await convertFullTableCsv('02_tTimeInOut_AddLeave.csv', 'tTimeInOut_AddLeave', '12_dbo.tTimeInOut_AddLeave.sql');
-  await convertFullTableCsv('03_tTimeStamp.csv', 'tTimeStamp', '13_dbo.tTimeStamp.sql');
-  await convertFullTableCsv('04_tLogAddLeaveManagement.csv', 'tLogAddLeaveManagement', '14_dbo.tLogAddLeaveManagement.sql');
-  await convertFullTableCsv('04_tRequest.csv', 'tRequest', '15_dbo.tRequest.sql');
+  await convertFullTableCsv('02_tTimeInOut.csv', 'tTimeInOut', '11_dbo.tTimeInOut.sql', 100);
+  await convertFullTableCsv('02_tTimeInOut_AddLeave.csv', 'tTimeInOut_AddLeave', '12_dbo.tTimeInOut_AddLeave.sql', 100);
+  await convertFullTableCsv('03_tTimeStamp.csv', 'tTimeStamp', '13_dbo.tTimeStamp.sql', 500);
+  await convertFullTableCsv('04_tLogAddLeaveManagement.csv', 'tLogAddLeaveManagement', '14_dbo.tLogAddLeaveManagement.sql', 500);
+  await convertFullTableCsv('04_tRequest.csv', 'tRequest', '15_dbo.tRequest.sql', 100);
+  await convertFullTableCsv('06_tLOG_OTApprove_20260914_20260916.csv', 'tLOG_OTApprove', '16_dbo.tLOG_OTApprove.sql', 500);
 
   console.log('\nAll seed SQL files generated successfully in database/seed/20260914/!');
 }
