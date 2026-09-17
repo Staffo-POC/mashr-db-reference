@@ -6,6 +6,8 @@ Use this page as the documentation entry point.
 
 - [MAS DB Analysis MVP](./MAS-DB-Analysis-MVP/README.md) - current documentation set for database domains, Mermaid diagrams, and SVG exports.
 
+- [MAS Leave Design Findings](./MAS-Leave-Design-Findings.md) - Leave type / quota / request / approval / payroll ออกแบบมาอย่างไรใน MAS พร้อม mapping ไป Staffo (ตอบ discovery questions)
+
 ## Reference Only
 
 - [MAS reverse engineering notes](./mas-reverse-engineering/README.md) - older detailed working notes, seed runbooks, table catalogs, and exploratory analysis.

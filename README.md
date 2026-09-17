@@ -37,6 +37,9 @@ If you connect with an MCP/MSSQL client (e.g. `.mcp.json`), make sure its `MSSQL
 ./scripts/logs.sh    # follow SQL Server container logs
 ./scripts/stop.sh    # stop the container without deleting data
 ./scripts/reset.sh   # delete the Docker volume and run setup again
+
+./scripts/load-seed-export.sh <zip|dir>   # stage a server export as a seed snapshot and import it
+./scripts/check-site-data.sh              # company/site data-quality report for the local database
 ```
 
 ## Structure
@@ -98,6 +101,32 @@ database/seed/${MASHR_SEED_SNAPSHOT}/
 ```
 
 Leave `MASHR_SEED_SNAPSHOT` blank when no approved seed data should be imported.
+
+## Refreshing Data From The Production Server
+
+`scripts/export/` holds a read-only exporter that runs on the MAS server and writes a
+seed snapshot in exactly the format this repo imports. Use it when the committed
+snapshot is too thin to analyse a question (site transfers, attendance per site, payroll).
+
+```powershell
+:: on the server (PowerShell 3.0+, no extra modules needed)
+.\run-export.cmd -DryRun                      :: row counts only
+.\run-export.cmd -TopSites 8 -Months 3        :: writes out\<date>\ and a .zip
+```
+
+```bash
+# on this machine
+./scripts/load-seed-export.sh ~/Downloads/mashr-seed-20260907.zip
+./scripts/check-site-data.sh
+```
+
+`load-seed-export.sh` unpacks the export into `database/seed/<snapshot>/`, points
+`MASHR_SEED_SNAPSHOT` at it and runs `./scripts/setup.sh`. Pass `--no-setup` to stage only.
+
+Master tables (site, company, approver, menus) are exported in full; transaction tables
+are limited by site, employee and date window so the snapshot stays small. Personal data is
+masked by default (`-Mask Basic`) — see [scripts/export/README.md](scripts/export/README.md)
+for the parameters, the masking rules and the full table list.
 
 ## Sample Seed Data
 
